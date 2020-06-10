@@ -1,8 +1,4 @@
-import React from 'react';
-import { useDrop, XYCoord } from 'react-dnd';
-
-import ItemTypes from './util/ItemTypes';
-import { DragItem } from './util/BoardInterface';
+import React, { useRef } from 'react';
 
 const multFactor = 30;
 
@@ -22,36 +18,13 @@ fullHeight *= multFactor;
 goalCircleR *= multFactor;
 centerCircleR *= multFactor;
 
-interface Props {
-  updateState: Function;
-}
-
-const Court: React.FC<Props> = (props) => {
-  const { updateState } = props;
-  const moveBox = (item: DragItem, delta: XYCoord) => {
-    const { type, id, left, top } = item;
-    updateState((prevState: { [key: string]: DragItem }) => {
-      return {
-        ...prevState,
-        [id]: { type, id, left: left + delta.x, top: top + delta.y },
-      };
-    });
-  };
-  const [, drop] = useDrop({
-    accept: ItemTypes.PLAYER,
-    drop(item: DragItem, monitor) {
-      const delta = monitor.getDifferenceFromInitialOffset() as XYCoord;
-      moveBox(monitor.getItem(), delta);
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  });
+const Court: React.FC = () => {
+  const d3Container = useRef(null);
 
   return (
-    <div ref={drop} className="flex justify-center">
+    <div className="flex justify-center">
       <svg
+        ref={d3Container}
         width={fullWidth}
         height={fullHeight}
         // transform="rotate(-90) translate(-90)"
@@ -79,7 +52,7 @@ const Court: React.FC<Props> = (props) => {
           id="full"
           width={fullWidth}
           height={fullHeight}
-          className="fill-current text-gray-500"
+          className="fill-current text-gray-400"
         />
         <rect
           id="court"
@@ -87,7 +60,7 @@ const Court: React.FC<Props> = (props) => {
           y={extDist}
           width={courtWidth}
           height={courtHeight}
-          className="fill-current text-blue-400"
+          className="fill-current text-blue-500"
         />
         <circle
           id="shootC1"
