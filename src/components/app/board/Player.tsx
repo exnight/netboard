@@ -7,7 +7,8 @@ const svgHeight = svgDim;
 
 interface Props {
   pos: string;
-  color: string;
+  circleColor: string;
+  textColor: string;
 }
 
 function makeDraggable(ref: RefObject<SVGSVGElement>) {
@@ -40,7 +41,7 @@ class Player extends Component<Props> {
   }
 
   render() {
-    const { pos, color } = this.props;
+    const { pos, circleColor, textColor } = this.props;
 
     return (
       <svg
@@ -53,13 +54,13 @@ class Player extends Component<Props> {
           cx={svgWidth / 2}
           cy={svgHeight / 2}
           r={svgDim / 2.5}
-          className={`fill-current text-${color}-300`}
+          className={`fill-current ${circleColor}`}
         />
         <text
           x={svgWidth / 2}
           y={svgHeight * 0.6}
           strokeWidth="14px"
-          className={`fill-current text-${color}-800`}
+          className={`fill-current ${textColor}`}
         >
           {pos}
         </text>

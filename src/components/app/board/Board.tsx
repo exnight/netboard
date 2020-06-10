@@ -14,10 +14,24 @@ const Board: React.FC = () => {
       <Court />
       <BottomControl>
         {playerList.map((pos: string) => {
-          return <Player key={`T1_${pos}`} pos={pos} color="red" />;
+          return (
+            <Player
+              key={`T1_${pos}`}
+              pos={pos}
+              circleColor="text-red-300"
+              textColor="text-red-800"
+            />
+          );
         })}
         {playerList.reverse().map((pos: string) => {
-          return <Player key={`T2_${pos}`} pos={pos} color="teal" />;
+          return (
+            <Player
+              key={`T2_${pos}`}
+              pos={pos}
+              circleColor="text-teal-300"
+              textColor="text-teal-800"
+            />
+          );
         })}
       </BottomControl>
     </>
