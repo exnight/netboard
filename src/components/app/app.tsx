@@ -1,14 +1,14 @@
 import React from 'react';
 
+import Board from './board';
+
 import './app.css';
 
 const App: React.FC = () => {
   return (
-    <>
-      <div className="flex w-full h-full justify-center items-center">
-        <p className="text-gray-700 text-6xl">Hello World</p>
-      </div>
-    </>
+    <div className="flex flex-col h-screen bg-gray-300 items-center">
+      <Board />
+    </div>
   );
 };
 
