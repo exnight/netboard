@@ -1,27 +1,27 @@
 import React, { useEffect, useRef } from 'react';
 
-import { makeDraggable } from './util/helper';
+import { makeDraggable, setPositions } from './util/helper';
 
 const svgDim = 48;
 const svgWidth = svgDim;
 const svgHeight = svgDim;
 
 interface Props {
+  team: number;
   pos: string;
   circleColor: string;
   textColor: string;
 }
 
 const Player: React.FC<Props> = (props) => {
-  const { pos, circleColor, textColor } = props;
+  const { team, pos, circleColor, textColor } = props;
+  const id = `${team}_${pos}`;
 
   const ref = useRef<SVGSVGElement>(null);
   useEffect(() => {
-    makeDraggable(ref);
-    return () => {
-      // cleanup
-    };
-  }, []);
+    setPositions(ref, id);
+    makeDraggable(ref, id);
+  }, [id]);
 
   return (
     <svg width={svgWidth} height={svgHeight} textAnchor="middle" ref={ref}>

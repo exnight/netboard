@@ -6,7 +6,7 @@ import './app.css';
 
 const App: React.FC = () => {
   return (
-    <div className="flex flex-col h-screen bg-gray-300 items-center">
+    <div className="h-full bg-gray-300">
       <Board />
     </div>
   );
