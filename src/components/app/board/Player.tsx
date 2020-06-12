@@ -1,6 +1,11 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { makeDraggable, setPositions } from './util/helper';
+import {
+  makeDraggable,
+  COOR_PREFIX,
+  getCoorFromLocalStorage,
+  updateCoor,
+} from './util/helper';
 
 const svgDim = 48;
 const svgWidth = svgDim;
@@ -18,10 +23,13 @@ const Player: React.FC<Props> = (props) => {
   const id = `${team}_${pos}`;
 
   const ref = useRef<SVGSVGElement>(null);
+  const [x, y] = getCoorFromLocalStorage(`${COOR_PREFIX}${id}`);
+  const [playerCoor, setPlayerCoor] = useState<[number, number]>([x, y]);
+
   useEffect(() => {
-    setPositions(ref, id);
-    makeDraggable(ref, id);
-  }, [id]);
+    makeDraggable(id, ref, playerCoor, setPlayerCoor);
+    updateCoor(id, ref, playerCoor);
+  }, [id, playerCoor]);
 
   return (
     <svg width={svgWidth} height={svgHeight} textAnchor="middle" ref={ref}>

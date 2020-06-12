@@ -25,7 +25,6 @@ const Board: React.FC = () => {
             />
           );
         })}
-        <Ball />
         {playerList.reverse().map((pos: string) => {
           return (
             <Player
@@ -37,6 +36,7 @@ const Board: React.FC = () => {
             />
           );
         })}
+        <Ball />
       </BottomControl>
     </div>
   );
