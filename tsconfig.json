@@ -14,6 +14,10 @@
         "esModuleInterop": true,
         "typeRoots": [
             "./custom_typings"
+        ],
+        "lib": [
+            "es6",
+            "dom"
         ]
     },
     "exclude": [

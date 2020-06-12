@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 const multFactor = 30;
 
@@ -19,12 +19,9 @@ goalCircleR *= multFactor;
 centerCircleR *= multFactor;
 
 const Court: React.FC = () => {
-  const d3Container = useRef(null);
-
   return (
     <div className="flex justify-center">
       <svg
-        ref={d3Container}
         width={fullWidth}
         height={fullHeight}
         // transform="rotate(-90) translate(-90)"

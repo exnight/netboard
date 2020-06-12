@@ -1,72 +1,50 @@
-import React, { Component, RefObject, createRef } from 'react';
-import * as d3 from 'd3';
+import React, { useContext, useEffect, useRef } from 'react';
+
+import { makeDraggable, updateCoor } from './util/helper';
+import { CoorContext } from './util/CoorContext';
 
 const svgDim = 48;
 const svgWidth = svgDim;
 const svgHeight = svgDim;
 
 interface Props {
+  team: number;
   pos: string;
   circleColor: string;
   textColor: string;
 }
 
-function makeDraggable(ref: RefObject<SVGSVGElement>) {
-  let translateX = 0;
-  let translateY = 0;
+const Player: React.FC<Props> = (props) => {
+  const { team, pos, circleColor, textColor } = props;
+  const id = `T${team}_${pos}`;
 
-  const handleDrag = d3
-    .drag()
-    .subject(() => ({ x: translateX, y: translateY }))
-    .on('drag', () => {
-      const me = d3.select(ref.current);
-      const transform = `translate(${d3.event.x}, ${d3.event.y})`;
-      translateX = d3.event.x;
-      translateY = d3.event.y;
-      me.attr('transform', transform);
-    });
-  if (ref.current) handleDrag(d3.select(ref.current));
-}
+  const ref = useRef<SVGSVGElement>(null);
+  const { coorState, setCoorState } = useContext(CoorContext);
+  const currState = coorState[id];
 
-class Player extends Component<Props> {
-  ref: RefObject<SVGSVGElement>;
+  useEffect(() => {
+    makeDraggable(id, ref, currState, setCoorState);
+    updateCoor(id, ref, currState);
+  }, [id, currState, setCoorState]);
 
-  constructor(props: Props) {
-    super(props);
-    this.ref = createRef();
-  }
-
-  componentDidMount() {
-    makeDraggable(this.ref);
-  }
-
-  render() {
-    const { pos, circleColor, textColor } = this.props;
-
-    return (
-      <svg
-        width={svgWidth}
-        height={svgHeight}
-        textAnchor="middle"
-        ref={this.ref}
+  return (
+    <svg width={svgWidth} height={svgHeight} textAnchor="middle" ref={ref}>
+      <circle
+        cx={svgWidth / 2}
+        cy={svgHeight / 2}
+        r={svgDim / 2.5}
+        className={`fill-current ${circleColor}`}
+      />
+      <text
+        x={svgWidth / 2}
+        y={svgHeight * 0.6}
+        strokeWidth="14px"
+        className={`fill-current ${textColor}`}
       >
-        <circle
-          cx={svgWidth / 2}
-          cy={svgHeight / 2}
-          r={svgDim / 2.5}
-          className={`fill-current ${circleColor}`}
-        />
-        <text
-          x={svgWidth / 2}
-          y={svgHeight * 0.6}
-          strokeWidth="14px"
-          className={`fill-current ${textColor}`}
-        >
-          {pos}
-        </text>
-      </svg>
-    );
-  }
-}
+        {pos}
+      </text>
+    </svg>
+  );
+};
 
 export default Player;
