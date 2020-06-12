@@ -3,29 +3,39 @@ import * as d3 from 'd3';
 
 const coorPrefix = 'coor_';
 
+export const getCoorFromLocalStorage = (key: string) => {
+  const xy = localStorage
+    .getItem(key)
+    ?.split(',')
+    .map((val) => parseInt(val, 10)) || [0, 0];
+  return xy as [number, number];
+};
+
+export const setCoorToLocalStorage = (key: string, coor: [number, number]) => {
+  localStorage.setItem(key, `${coor[0]},${coor[1]}`);
+};
+
 export const makeDraggable = (ref: RefObject<SVGSVGElement>, id: string) => {
-  let [translateX, translateY] = localStorage
-    .getItem(`${coorPrefix}${id}`)
-    ?.split(',') || [0, 0];
+  let [x, y] = getCoorFromLocalStorage(`${coorPrefix}${id}`);
 
   const handleDrag = d3
     .drag()
-    .subject(() => ({ x: translateX, y: translateY }))
+    .subject(() => ({ x, y }))
     .on('drag', () => {
       const me = d3.select(ref.current);
       const transform = `translate(${d3.event.x}, ${d3.event.y})`;
-      translateX = d3.event.x;
-      translateY = d3.event.y;
+      x = d3.event.x;
+      y = d3.event.y;
       me.attr('transform', transform);
-      localStorage.setItem(`${coorPrefix}${id}`, `${translateX},${translateY}`);
+      setCoorToLocalStorage(`${coorPrefix}${id}`, [x, y]);
     });
 
   if (ref.current) handleDrag(d3.select(ref.current));
 };
 
 export const setPositions = (ref: RefObject<SVGSVGElement>, id: string) => {
-  const xy = localStorage.getItem(`${coorPrefix}${id}`)?.split(',') || [0, 0];
-  const transform = `translate(${xy[0]}, ${xy[1]})`;
+  const [x, y] = getCoorFromLocalStorage(`${coorPrefix}${id}`);
+  const transform = `translate(${x}, ${y})`;
   if (ref.current) d3.select(ref.current).attr('transform', transform);
 };
 
@@ -33,5 +43,5 @@ export const resetAllPositions = () => {
   const keys = Object.keys(localStorage).filter((item) =>
     item.startsWith(coorPrefix)
   );
-  keys.forEach((key) => localStorage.setItem(key, '0,0'));
+  keys.forEach((key) => setCoorToLocalStorage(key, [0, 0]));
 };
