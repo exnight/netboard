@@ -1,6 +1,8 @@
 import { RefObject } from 'react';
 import * as d3 from 'd3';
 
+import { Coordinates } from './CoorContext';
+
 export const COOR_PREFIX = 'coor_';
 
 export const getCoorFromLocalStorage = (key: string) => {
@@ -36,7 +38,7 @@ export const makeDraggable = (
   id: string,
   ref: RefObject<SVGSVGElement>,
   state: [number, number],
-  setState?: Function
+  setState: Function
 ) => {
   let [x, y] = state;
 
@@ -46,15 +48,23 @@ export const makeDraggable = (
     .on('drag', () => {
       x = d3.event.x;
       y = d3.event.y;
-      if (setState) setState([x, y]);
+
+      setState((prevState: Coordinates) => {
+        const newState = { ...prevState };
+        newState[id] = [x, y];
+        return newState;
+      });
     });
 
   if (ref.current) handleDrag(d3.select(ref.current));
 };
 
-export const resetAllCoor = () => {
-  const keys = Object.keys(localStorage).filter((item) =>
-    item.startsWith(COOR_PREFIX)
-  );
-  keys.forEach((key) => setCoorToLocalStorage(key, [0, 0]));
+export const resetAllCoor = (setState: (fn: Function) => void) => {
+  setState((prevState: Coordinates) => {
+    const newState = { ...prevState };
+    Object.keys(prevState).forEach((key) => {
+      newState[key] = [0, 0];
+    });
+    return newState;
+  });
 };

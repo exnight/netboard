@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
-import {
-  makeDraggable,
-  COOR_PREFIX,
-  getCoorFromLocalStorage,
-  updateCoor,
-} from './util/helper';
+import { makeDraggable, updateCoor } from './util/helper';
+import { CoorContext } from './util/CoorContext';
 
 const svgDim = 48;
 const svgWidth = svgDim;
@@ -20,16 +16,16 @@ interface Props {
 
 const Player: React.FC<Props> = (props) => {
   const { team, pos, circleColor, textColor } = props;
-  const id = `${team}_${pos}`;
+  const id = `T${team}_${pos}`;
 
   const ref = useRef<SVGSVGElement>(null);
-  const [x, y] = getCoorFromLocalStorage(`${COOR_PREFIX}${id}`);
-  const [playerCoor, setPlayerCoor] = useState<[number, number]>([x, y]);
+  const { coorState, setCoorState } = useContext(CoorContext);
+  const currState = coorState[id];
 
   useEffect(() => {
-    makeDraggable(id, ref, playerCoor, setPlayerCoor);
-    updateCoor(id, ref, playerCoor);
-  }, [id, playerCoor]);
+    makeDraggable(id, ref, currState, setCoorState);
+    updateCoor(id, ref, currState);
+  }, [id, currState, setCoorState]);
 
   return (
     <svg width={svgWidth} height={svgHeight} textAnchor="middle" ref={ref}>

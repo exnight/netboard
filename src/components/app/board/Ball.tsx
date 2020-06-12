@@ -1,11 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 
-import {
-  makeDraggable,
-  COOR_PREFIX,
-  getCoorFromLocalStorage,
-  updateCoor,
-} from './util/helper';
+import { makeDraggable, updateCoor } from './util/helper';
+import { CoorContext } from './util/CoorContext';
 
 const svgDim = 24;
 const svgWidth = svgDim;
@@ -15,13 +11,13 @@ const Ball: React.FC = () => {
   const id = 'ball';
 
   const ref = useRef<SVGSVGElement>(null);
-  const [x, y] = getCoorFromLocalStorage(`${COOR_PREFIX}${id}`);
-  const [ballCoor, setBallCoor] = useState<[number, number]>([x, y]);
+  const { coorState, setCoorState } = useContext(CoorContext);
+  const currState = coorState[id];
 
   useEffect(() => {
-    makeDraggable(id, ref, ballCoor, setBallCoor);
-    updateCoor(id, ref, ballCoor);
-  }, [ballCoor]);
+    makeDraggable(id, ref, currState, setCoorState);
+    updateCoor(id, ref, currState);
+  }, [id, currState, setCoorState]);
 
   return (
     <>
@@ -41,15 +37,6 @@ const Ball: React.FC = () => {
           fill="none"
         />
       </svg>
-
-      <button
-        type="button"
-        onClick={() => {
-          setBallCoor([0, 0]);
-        }}
-      >
-        Reset Pos
-      </button>
     </>
   );
 };
