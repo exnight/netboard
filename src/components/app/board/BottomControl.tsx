@@ -1,6 +1,6 @@
 import React from 'react';
 
-const BottomController: React.FC = (props) => {
+const BottomControl: React.FC = (props) => {
   const { children } = props;
   return (
     <div className="flex w-full h-24 justify-center align-center">
@@ -9,4 +9,4 @@ const BottomController: React.FC = (props) => {
   );
 };
 
-export default BottomController;
+export default BottomControl;

@@ -1,8 +1,8 @@
 import React from 'react';
 
-import TopControl from './TopController';
+import TopControl from './TopControl';
 import Court from './Court';
-import BottomControl from './BottomController';
+import BottomControl from './BottomControl';
 import Player from './Player';
 
 const playerList = ['GS', 'GA', 'WA', 'C', 'WD', 'GD', 'GK'];
