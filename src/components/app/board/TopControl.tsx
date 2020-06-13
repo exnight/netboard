@@ -1,16 +1,9 @@
-import React, { useContext } from 'react';
-
-import { CoorContext } from './util/CoorContext';
-import { resetAllCoor } from './util/helper';
+import React from 'react';
 
 const TopControl: React.FC = () => {
-  const { setCoorState } = useContext(CoorContext);
-
   return (
-    <div className="w-full h-12 flex justify-center">
-      <button type="button" onClick={() => resetAllCoor(setCoorState)}>
-        Clear All Positions
-      </button>
+    <div className="bg-white w-full flex">
+      <div className="w-full text-center">Top Control</div>
     </div>
   );
 };

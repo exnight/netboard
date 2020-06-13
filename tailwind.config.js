@@ -1,6 +1,10 @@
 module.exports = {
-  purge: { enabled: true, content: ['./src/**/*.tsx'] },
-  theme: {},
+  purge: { content: ['./src/**/*.tsx'] },
+  theme: {
+    container: {
+      center: true,
+    },
+  },
   variants: {},
   plugins: [],
 };

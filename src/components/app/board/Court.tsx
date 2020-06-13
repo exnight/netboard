@@ -20,11 +20,11 @@ centerCircleR *= multFactor;
 
 const Court: React.FC = () => {
   return (
-    <div className="flex justify-center">
+    <div className="">
       <svg
-        width={fullWidth}
-        height={fullHeight}
-        // transform="rotate(-90) translate(-90)"
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${fullWidth} ${fullHeight}`}
       >
         <defs>
           <clipPath id="cutOffLeft">
