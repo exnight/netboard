@@ -34,7 +34,7 @@ const Board: React.FC = () => {
   ]);
 
   return (
-    <div className="h-screen flex flex-col container">
+    <div className="h-full flex flex-col container">
       <CoorContext.Provider value={coorProviderValue}>
         <TopControl />
         <Court />

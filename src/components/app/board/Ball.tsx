@@ -26,16 +26,17 @@ const Ball: React.FC = () => {
           cx={svgWidth / 2}
           cy={svgHeight / 2}
           r={svgDim / 2.5}
-          className="fill-current text-white"
+          className="fill-current text-gray-300"
         />
         <circle
           cx={svgWidth / 2}
           cy={svgHeight / 2}
           r={svgDim / 2.5}
-          stroke="black"
-          strokeWidth="2"
+          strokeWidth="3"
           fill="none"
+          className="stroke-current text-gray-600"
         />
+        <title>Ball</title>
       </svg>
     </>
   );
