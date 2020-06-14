@@ -1,9 +1,14 @@
 const path = require('path');
 const merge = require('webpack-merge');
 
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
+
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 const common = require('./webpack.config.common');
 
@@ -38,6 +43,12 @@ const prod = {
         },
       ],
     }),
+    new CleanWebpackPlugin(),
+    process.env.DEPLOY_ENV === 'local'
+      ? new BundleAnalyzerPlugin()
+      : () => {
+          // do nth
+        },
   ],
   optimization: {
     splitChunks: {
@@ -51,7 +62,7 @@ const prod = {
       },
     },
     minimize: true,
-    minimizer: [new TerserPlugin()],
+    minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
   },
   mode: 'production',
 };
