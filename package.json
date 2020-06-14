@@ -52,7 +52,7 @@
     "scripts": {
         "start": "webpack-dev-server --hot --inline",
         "build": "cross-env NODE_ENV=production DEPLOY_ENV=local webpack",
-        "predeploy": "rimraf ./build/* && cross-env NODE_ENV=production webpack",
+        "predeploy": "cross-env NODE_ENV=production webpack",
         "deploy": "gh-pages -d build",
         "stats": "webpack -p --profile --json > stats.json"
     }
