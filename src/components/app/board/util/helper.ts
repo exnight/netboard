@@ -32,6 +32,10 @@ export const makeDraggable = (
   if (ref.current) handleDrag(select(ref.current));
 };
 
+export const resetCoor = (id: string, setState: (fn: Function) => void) => {
+  setState((prevState: Coordinates) => ({ ...prevState, [id]: [0, 0] }));
+};
+
 export const resetAllCoor = (setState: (fn: Function) => void) => {
   setState((prevState: Coordinates) => {
     const newState = { ...prevState };

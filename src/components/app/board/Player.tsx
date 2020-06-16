@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 
-import { makeDraggable, updateCoor } from './util/helper';
+import { makeDraggable, updateCoor, resetCoor } from './util/helper';
 import { CoorContext } from './util/CoorContext';
 
 const svgDim = 48;
@@ -28,7 +28,13 @@ const Player: React.FC<Props> = (props) => {
   }, [id, currState, setCoorState]);
 
   return (
-    <svg width={svgWidth} height={svgHeight} textAnchor="middle" ref={ref}>
+    <svg
+      width={svgWidth}
+      height={svgHeight}
+      textAnchor="middle"
+      ref={ref}
+      onDoubleClick={() => resetCoor(id, setCoorState)}
+    >
       <circle
         cx={svgWidth / 2}
         cy={svgHeight / 2}
