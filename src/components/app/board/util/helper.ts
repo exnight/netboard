@@ -1,5 +1,6 @@
 import { RefObject } from 'react';
-import * as d3 from 'd3';
+import { event, select } from 'd3-selection';
+import { drag } from 'd3-drag';
 
 import { Coordinates } from './CoorContext';
 
@@ -22,7 +23,7 @@ export const drawAtCoor = (
   [x, y]: [number, number]
 ) => {
   const transform = `translate(${x}, ${y})`;
-  if (ref.current) d3.select(ref.current).attr('transform', transform);
+  if (ref.current) select(ref.current).attr('transform', transform);
 };
 
 export const updateCoor = (
@@ -42,12 +43,11 @@ export const makeDraggable = (
 ) => {
   let [x, y] = state;
 
-  const handleDrag = d3
-    .drag()
+  const handleDrag = drag()
     .subject(() => ({ x, y }))
     .on('drag', () => {
-      x = d3.event.x;
-      y = d3.event.y;
+      x = event.x;
+      y = event.y;
 
       setState((prevState: Coordinates) => {
         const newState = { ...prevState };
@@ -56,7 +56,7 @@ export const makeDraggable = (
       });
     });
 
-  if (ref.current) handleDrag(d3.select(ref.current));
+  if (ref.current) handleDrag(select(ref.current));
 };
 
 export const resetAllCoor = (setState: (fn: Function) => void) => {
