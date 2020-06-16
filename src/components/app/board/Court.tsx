@@ -20,7 +20,7 @@ centerCircleR *= multFactor;
 
 const Court: React.FC = () => {
   return (
-    <div className="w-full">
+    <div className="w-3/4">
       <svg
         width="100%"
         height="100%"

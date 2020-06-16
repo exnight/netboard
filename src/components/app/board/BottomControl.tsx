@@ -20,7 +20,7 @@ const BottomControl: React.FC<Props> = (props) => {
   const [toolIsOpen, setToolIsOpen] = useState(false);
 
   return (
-    <div className="w-full flex my-4">
+    <div className="w-4/5 flex my-4">
       <div className="w-1/2 flex flex-col px-8">
         <div className="flex justify-center">
           {players[0].map((pos: string) => {
@@ -91,21 +91,21 @@ const BottomControl: React.FC<Props> = (props) => {
           <button
             type="button"
             onClick={() => setToolIsOpen(!toolIsOpen)}
-            className="relative z-10 bg-white text-gray-600 hover:bg-gray-500 hover:text-white focus:outline-none focus:shadow-outline py-2 px-4 border border-gray-400 rounded shadow"
+            className="relative z-10 text-xs bg-white text-gray-600 hover:bg-gray-500 hover:text-white focus:outline-none focus:shadow-outline py-2 px-4 border border-gray-400 rounded shadow"
           >
             Select Tool
           </button>
         </div>
         <button
           type="button"
-          className="bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          className="text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
         >
           Clear Drawings
         </button>
         <button
           type="button"
           onClick={() => resetAllCoor(setCoorState)}
-          className="bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          className="text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
         >
           Reset Positions
         </button>
