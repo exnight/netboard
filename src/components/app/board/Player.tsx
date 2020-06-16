@@ -24,7 +24,7 @@ const Player: React.FC<Props> = (props) => {
 
   useEffect(() => {
     makeDraggable(id, ref, currState, setCoorState);
-    updateCoor(id, ref, currState);
+    updateCoor(ref, currState);
   }, [id, currState, setCoorState]);
 
   return (

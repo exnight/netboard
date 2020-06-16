@@ -4,21 +4,7 @@ import { drag } from 'd3-drag';
 
 import { Coordinates } from './CoorContext';
 
-export const COOR_PREFIX = 'coor_';
-
-export const getCoorFromLocalStorage = (key: string) => {
-  const xy = localStorage
-    .getItem(key)
-    ?.split(',')
-    .map((val) => parseInt(val, 10)) || [0, 0];
-  return xy as [number, number];
-};
-
-export const setCoorToLocalStorage = (key: string, coor: [number, number]) => {
-  localStorage.setItem(key, `${coor[0]},${coor[1]}`);
-};
-
-export const drawAtCoor = (
+export const updateCoor = (
   ref: RefObject<SVGSVGElement>,
   [x, y]: [number, number]
 ) => {
@@ -26,34 +12,21 @@ export const drawAtCoor = (
   if (ref.current) select(ref.current).attr('transform', transform);
 };
 
-export const updateCoor = (
-  id: string,
-  ref: RefObject<SVGSVGElement>,
-  newCoor: [number, number]
-) => {
-  setCoorToLocalStorage(`${COOR_PREFIX}${id}`, newCoor);
-  drawAtCoor(ref, newCoor);
-};
-
 export const makeDraggable = (
   id: string,
   ref: RefObject<SVGSVGElement>,
-  state: [number, number],
+  currState: [number, number],
   setState: Function
 ) => {
-  let [x, y] = state;
+  let [x, y] = currState;
 
   const handleDrag = drag()
     .subject(() => ({ x, y }))
     .on('drag', () => {
-      x = event.x;
-      y = event.y;
-
-      setState((prevState: Coordinates) => {
-        const newState = { ...prevState };
-        newState[id] = [x, y];
-        return newState;
-      });
+      setState((prevState: Coordinates) => ({
+        ...prevState,
+        [id]: [event.x, event.y],
+      }));
     });
 
   if (ref.current) handleDrag(select(ref.current));

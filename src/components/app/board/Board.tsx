@@ -1,37 +1,35 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import TopControl from './TopControl';
 import Court from './Court';
 import BottomControl from './BottomControl';
 
 import { CoorContext, Coordinates } from './util/CoorContext';
-import { COOR_PREFIX, getCoorFromLocalStorage } from './util/helper';
 
 const T1Players = ['GS', 'GA', 'WA', 'C', 'WD', 'GD', 'GK'];
 const T2Players = [...T1Players].reverse();
 
-const initCoorState: Coordinates = {};
+let initCoorState: Coordinates = {};
+const figLocal = localStorage.getItem('figState');
 
-T1Players.forEach((pos) => {
-  initCoorState[`T1_${pos}`] = getCoorFromLocalStorage(
-    `${COOR_PREFIX}T1_${pos}`
-  );
-});
+if (figLocal) {
+  initCoorState = JSON.parse(figLocal);
+} else {
+  T1Players.forEach((pos) => {
+    initCoorState[`T1_${pos}`] = [0, 0];
+    initCoorState[`T2_${pos}`] = [0, 0];
+  });
 
-T2Players.forEach((pos) => {
-  initCoorState[`T2_${pos}`] = getCoorFromLocalStorage(
-    `${COOR_PREFIX}T2_${pos}`
-  );
-});
-
-initCoorState.ball = getCoorFromLocalStorage(`${COOR_PREFIX}ball`);
+  initCoorState.ball = [0, 0];
+}
 
 const Board: React.FC = () => {
   const [coorState, setCoorState] = useState(initCoorState);
-  const coorProviderValue = useMemo(() => ({ coorState, setCoorState }), [
-    coorState,
-    setCoorState,
-  ]);
+  const coorProviderValue = { coorState, setCoorState };
+
+  useEffect(() => {
+    localStorage.setItem('figState', JSON.stringify(coorState));
+  }, [coorState]);
 
   return (
     <div className="h-full flex flex-col container">
