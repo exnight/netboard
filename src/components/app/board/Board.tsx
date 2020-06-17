@@ -32,7 +32,7 @@ const Board: React.FC = () => {
   }, [coorState]);
 
   return (
-    <div className="h-full flex flex-col container items-center">
+    <div className="h-screen flex flex-col container items-center">
       <CoorContext.Provider value={coorProviderValue}>
         <TopControl />
         <Court />

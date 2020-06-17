@@ -14,6 +14,9 @@ interface Props {
 const toolClassName =
   'w-full px-4 py-2 hover:bg-indigo-500 hover:text-white focus:outline-none';
 
+const baseBtnClassName =
+  'focus:outline-none focus:shadow-outline lg:py-2 lg:px-2 md:p-0 border border-gray-400 rounded shadow';
+
 const BottomControl: React.FC<Props> = (props) => {
   const { players } = props;
   const { setCoorState } = useContext(CoorContext);
@@ -91,21 +94,21 @@ const BottomControl: React.FC<Props> = (props) => {
           <button
             type="button"
             onClick={() => setToolIsOpen(!toolIsOpen)}
-            className="relative z-10 text-xs bg-white text-gray-600 hover:bg-gray-500 hover:text-white focus:outline-none focus:shadow-outline py-2 px-4 border border-gray-400 rounded shadow"
+            className={`relative z-10 text-xs bg-white text-gray-600 hover:bg-gray-500 hover:text-white ${baseBtnClassName}`}
           >
             Select Tool
           </button>
         </div>
         <button
           type="button"
-          className="text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          className={`text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white font-semibold ${baseBtnClassName}`}
         >
           Clear Drawings
         </button>
         <button
           type="button"
           onClick={() => resetAllCoor(setCoorState)}
-          className="text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white focus:outline-none focus:shadow-outline font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          className={`text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white font-semibold ${baseBtnClassName}`}
         >
           Reset Positions
         </button>

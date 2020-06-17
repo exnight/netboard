@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react';
 import { makeDraggable, updateCoor, resetCoor } from './util/helper';
 import { CoorContext } from './util/CoorContext';
 
-const svgDim = 48;
+const svgDim = 24;
 const svgWidth = svgDim;
 const svgHeight = svgDim;
 
@@ -29,8 +29,9 @@ const Player: React.FC<Props> = (props) => {
 
   return (
     <svg
-      width={svgWidth}
-      height={svgHeight}
+      width="100%"
+      height="100%"
+      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       textAnchor="middle"
       ref={ref}
       onDoubleClick={() => resetCoor(id, setCoorState)}
@@ -38,13 +39,13 @@ const Player: React.FC<Props> = (props) => {
       <circle
         cx={svgWidth / 2}
         cy={svgHeight / 2}
-        r={svgDim / 2.5}
+        r={svgDim / 3}
         className={`fill-current ${circleColor}`}
       />
       <text
         x={svgWidth / 2}
         y={svgHeight * 0.6}
-        strokeWidth="14px"
+        fontSize="40%"
         className={`fill-current ${textColor}`}
       >
         {pos}

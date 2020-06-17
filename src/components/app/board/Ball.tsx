@@ -20,30 +20,28 @@ const Ball: React.FC = () => {
   }, [id, currState, setCoorState]);
 
   return (
-    <>
-      <svg
-        width={svgWidth}
-        height={svgHeight}
-        ref={ref}
-        onDoubleClick={() => resetCoor(id, setCoorState)}
-      >
-        <circle
-          cx={svgWidth / 2}
-          cy={svgHeight / 2}
-          r={svgDim / 2.5}
-          className="fill-current text-gray-300"
-        />
-        <circle
-          cx={svgWidth / 2}
-          cy={svgHeight / 2}
-          r={svgDim / 2.5}
-          strokeWidth="3"
-          fill="none"
-          className="stroke-current text-gray-600"
-        />
-        <title>Ball</title>
-      </svg>
-    </>
+    <svg
+      width={svgWidth}
+      height={svgHeight}
+      ref={ref}
+      onDoubleClick={() => resetCoor(id, setCoorState)}
+    >
+      <circle
+        cx={svgWidth / 2}
+        cy={svgHeight / 2}
+        r={svgDim / 3}
+        className="fill-current text-gray-300"
+      />
+      <circle
+        cx={svgWidth / 2}
+        cy={svgHeight / 2}
+        r={svgDim / 3}
+        strokeWidth="3"
+        fill="none"
+        className="stroke-current text-gray-600"
+      />
+      <title>Ball</title>
+    </svg>
   );
 };
 
