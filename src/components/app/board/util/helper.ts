@@ -45,3 +45,18 @@ export const resetAllCoor = (setState: (fn: Function) => void) => {
     return newState;
   });
 };
+
+export const getRelativePosition = (
+  cv: HTMLCanvasElement,
+  e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
+) => {
+  const rect = cv.getBoundingClientRect();
+
+  const cssScaleX = cv.width / cv.offsetWidth;
+  const cssScaleY = cv.height / cv.offsetHeight;
+
+  const x = (e.clientX - Math.round(rect.left)) * cssScaleX;
+  const y = (e.clientY - Math.round(rect.top)) * cssScaleY;
+
+  return [x, y];
+};

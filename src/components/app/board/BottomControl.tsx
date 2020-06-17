@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 
 import Player from './Player';
 import Ball from './Ball';
+import { clearCanvas } from './Canvas';
 
 import { CoorContext } from './util/CoorContext';
 import { resetAllCoor } from './util/helper';
@@ -101,6 +102,7 @@ const BottomControl: React.FC<Props> = (props) => {
         </div>
         <button
           type="button"
+          onClick={clearCanvas}
           className={`text-xs bg-white text-red-600 hover:bg-red-500 hover:text-white font-semibold ${baseBtnClassName}`}
         >
           Clear Drawings
